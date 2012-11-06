@@ -3,7 +3,7 @@
 #include <sstream>
 #include <string>
 #include <stdlib.h>
-#include "edge.h"
+#include "bheap.h"
 
 class Graph{
 private:
