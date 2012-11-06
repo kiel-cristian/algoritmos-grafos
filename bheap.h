@@ -13,17 +13,24 @@ public:
 
 
 class Bheap{
-public:
-	void insert(int _u,int _v,int _key);
-	int get_min();
-	void delete_min();
-	void print();
+	struct Node{
+		Node* left,*rigth;
+		int key,u,v,num_elements;
 
-	Bheap(){key=-1;u=-1;v=-1;num_elements=0;left=NULL;rigth=NULL;}
+		Node(int _key,int _u,int _v){
+            key =_key;
+            u= _u;
+            v= _v;
+            left = NULL;
+            rigth = NULL;
+        }
+	};
 
 private:
-	int key,u,v,num_elements;
-	Bheap *left, *rigth;
+	// int key,u,v,num_elements;
+	Node * root;
+	// Bheap *left, *rigth;
+	void create_root();
 	Leaf get_last();
 	void update_num_elements();
 
@@ -36,10 +43,24 @@ private:
 	void switch_with_child(Bheap *child);
 	void propagate_switch();
 	void set(int _key,int _u,int _v);
+
+public:
+	void insert(int _u,int _v,int _key);
+	int get_min();
+	void delete_min();
+	void print();
+
+	Bheap(){create_root();}
 };
 
-bool Bheap::is_leaf(){
-	return num_elements == 1;
+void Bheap::create_root(){
+	// root = new Node(-1,-1,);
+	// key=-1;u=-1;v=-1;num_elements=0;left=NULL;rigth=NULL;
+	root = NULL;
+}
+
+bool Bheap::is_leaf(Node *tree){
+	return tree == NULL || tree->num_elements == 1;
 }
 
 bool Bheap::is_empty(){
