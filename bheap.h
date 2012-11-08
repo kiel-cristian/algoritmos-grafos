@@ -1,8 +1,8 @@
-#include "nodeh.h"
+#include "heap.h"
 
 class Bheap{
 private:
-	NodeH * root;
+	Heap root;
 	void create_root();
 	bool is_empty();
 
@@ -26,7 +26,7 @@ void Bheap::create_root(){
 
 void Bheap::print(){
 	if(!is_empty())
-		root->print();
+		root.print(0);
 	else
 		cout << "Empty Bheap" << endl;
 }
@@ -36,14 +36,14 @@ int Bheap::get_min(){
 	if(is_empty())
 		return -1;
 	else
-		return root->get_min();
+		return root.get_min();
 }
 
 void Bheap::delete_min(){
 	if(is_empty())
 		return;
 	else{
-		int min = root->delete_min();
+		int min = root.delete_min();
 		if(min < 0){
 			root = NULL;
 		}
@@ -52,19 +52,19 @@ void Bheap::delete_min(){
 
 void Bheap::insert(Edge e){
 	if(is_empty())
-		root = new NodeH(e);
+		root = new Heap(e);
 	else
-		root->insert(e);
+		root.insert(e);
 }
 
 void Bheap::heapify(A edges){
 	Edge e = edges.at(0);
-	root = new NodeH(e);
+	root = new Heap(e);
 	for (int i = 1; i < edges.size(); ++i)
 	{
 		e = edges.at(i);
-		root->heap_insert(e);
+		root.heap_insert(e);
 	}
 
-	root->propagate_switch();
+	root.propagate_switch();
 }
