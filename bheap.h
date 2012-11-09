@@ -12,16 +12,10 @@ public:
 	void delete_min();
 	void print();
 	void heapify(A edges);
-
-	Bheap(){create_root();}
 };
 
 bool Bheap::is_empty(){
-	return root == NULL;
-}
-
-void Bheap::create_root(){
-	root = NULL;
+	return root.is_empty();
 }
 
 void Bheap::print(){
@@ -43,18 +37,12 @@ void Bheap::delete_min(){
 	if(is_empty())
 		return;
 	else{
-		int min = root.delete_min();
-		if(min < 0){
-			root = NULL;
-		}
+		root.delete_min();
 	}
 }
 
 void Bheap::insert(Edge e){
-	if(is_empty())
-		root = new Heap(e);
-	else
-		root.insert(e);
+	root.insert(e);
 }
 
 void Bheap::heapify(A edges){

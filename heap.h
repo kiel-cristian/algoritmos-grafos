@@ -17,12 +17,14 @@ struct Heap{
 
 		void propagate_switch();
 
+		Heap(){elements = 0;}
+
 		Heap(Edge e){
             heap.push_back(e);
             elements = 1;
         }
+        bool is_empty();
     private:
-		bool is_empty();
 		bool empty_at(int elem);
 
 		void propagate_to_last(int elem);
