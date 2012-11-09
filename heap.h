@@ -15,7 +15,7 @@ struct Heap{
 		int delete_min();
 		void print(int elem);
 
-		void propagate_switch();
+		// void propagate_switch();
 
 		Heap(){elements = 0;}
 
@@ -24,12 +24,19 @@ struct Heap{
             elements = 1;
         }
         bool is_empty();
+        void delete_all();
+        void heapify(A edges);
     private:
 		bool empty_at(int elem);
 
 		void propagate_to_last(int elem);
 		void propagate_to_root(int elem);
 };
+
+void Heap::delete_all(){
+	heap.erase(heap.begin(),heap.begin() + heap.size()-1);
+	elements = 0;
+}
 
 bool Heap::is_empty(){
 	return elements == 0;
@@ -108,4 +115,15 @@ void Heap::insert(Edge e){
 
 void Heap::heap_insert(Edge e){
 	heap.push_back(e);
+}
+
+void Heap::heapify(A edges){
+	Edge e = edges.at(0);
+	delete_all();
+	for (int i = 1; i < edges.size(); ++i)
+	{
+		e = edges.at(i);
+		heap_insert(e);
+	}
+	propagate_to_last(0);
 }

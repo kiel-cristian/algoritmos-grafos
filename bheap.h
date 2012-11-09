@@ -46,13 +46,5 @@ void Bheap::insert(Edge e){
 }
 
 void Bheap::heapify(A edges){
-	Edge e = edges.at(0);
-	root = new Heap(e);
-	for (int i = 1; i < edges.size(); ++i)
-	{
-		e = edges.at(i);
-		root.heap_insert(e);
-	}
-
-	root.propagate_switch();
+	root.heapify(edges);
 }
