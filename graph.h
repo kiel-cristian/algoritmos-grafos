@@ -18,6 +18,7 @@ public:
 	void print();
 
 	Edge get_edge(int element);
+	A get_edges();
 	int edge_size();
 
 	A radix_sorted_edges();
@@ -67,4 +68,8 @@ Edge Graph::get_edge(int element){
 
 int Graph::edge_size(){
 	return a.size();
+}
+
+A Graph::get_edges(){
+	return a;
 }

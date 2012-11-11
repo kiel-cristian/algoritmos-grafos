@@ -1,33 +1,50 @@
 #include "graph.h"
 
-int main(){
+void test(){
 	Graph g;
 	g.read_file();
-	// g.print();
-
 	Bheap heap;
 	int size = g.edge_size();
-
 	Edge e;
-
-	// e = g.get_edge(0);
-	// heap.insert(e);
-	// e = g.get_edge(1);
-	// heap.insert(e);
-	// e = g.get_edge(2);
-	// heap.insert(e);
-	// heap.print();
 
 	cout << "Insertando ("<< size << ") vertices" << endl;
 
 	for(int i = 0; i < size; ++i){
-		cout << "i :" << i  << endl;
-		if(i == 4){
-			break;
-		}
 		e = g.get_edge(i);
 		heap.insert(e);
 	}
-	heap.print();
-	return 0;
+
+	// heap.print();
+
+	for (int i = 0; i < size; ++i){
+		// cout << "heap1 min: " << heap.get_min() << endl;
+		heap.delete_min();
+	}
+}
+
+void test2(){
+	Graph g;
+	g.read_file();
+	Bheap heap;
+	int size = g.edge_size();
+	Edge e;
+
+	cout << "Insertando ("<< size << ") vertices" << endl;
+
+	heap.heapify(g.get_edges());
+
+	// heap.print();
+
+	for (int i = 0; i < size; ++i)
+	{
+		// cout << "heap2 min: " << heap.get_min() << endl;
+		heap.delete_min();
+	}
+}
+
+int main(){
+	// test();
+	// test2();
+
+	
 }
