@@ -4,11 +4,12 @@
 #include <string>
 #include <stdlib.h>
 #include "bheap.h"
+#include <time.h>
 
 class Graph{
 private:
 	ifstream file;
-	E e;
+	E nodes;
 	A a;
 public:
 	Graph(){
@@ -19,10 +20,16 @@ public:
 
 	Edge get_edge(int element);
 	A get_edges();
+	E get_nodes();
 	int edge_size();
 
 	A radix_sorted_edges();
 	A quick_sorted_edges();
+
+	vector<A> get_conected_graphs(A _edges);
+	int get_random_elem(int size);
+	A get_one_random_graph(A _edges);
+	A extract_conected_elements(A edges,Edge e);
 };
 
 void Graph::read_file(){
@@ -47,6 +54,16 @@ void Graph::read_file(){
 		e.set(u,v,distance);
 		a.push_back(e);
 
+		if(!(u < nodes.size() and nodes[u] == u)){
+			if(u >= nodes.size()){
+				nodes.push_back(u);
+			}
+		}
+		if(!(v < nodes.size() and nodes[v] == v)){
+			if(v >= nodes.size()){
+				nodes.push_back(v);
+			}
+		}
 	}
 	file.close();
 }
@@ -72,4 +89,73 @@ int Graph::edge_size(){
 
 A Graph::get_edges(){
 	return a;
+}
+
+E Graph::get_nodes(){
+	return nodes;
+}
+
+int Graph::get_random_elem(int size){
+  /* initialize random seed: */
+  srand ( time(NULL) );
+  /* generate secret number: */
+  return rand() % size;
+}
+
+A Graph::extract_conected_elements(A _edges,Edge first){
+	A result;
+	// bool more_elements, more_to_mark;
+	Edge e = first;
+	result.push_back(e);
+	// more_to_mark = false;
+
+	// do{
+	for (int i = 0; i < result.size(); ){
+		e = result[i];
+		if(e.mark){
+			i++;
+			continue;
+		}
+		else{
+			// more_to_mark = true;
+			result[i].mark = true;
+			i++;
+		}
+
+		// more_elements = false;
+		for (int j = 0; j < _edges.size(); ++j){
+			if(_edges[j].u == e.u or _edges[j].v == e.u or _edges[j].u == e.v or _edges[j].v == e.v ){
+				result.push_back(_edges[j]);
+				_edges.erase(_edges.begin() + j);
+				// if(!more_elements)
+				// 	more_elements = true;
+			}
+		}
+	}
+	// }
+	// while( more_elements or more_to_mark);
+
+	return result;
+}
+
+A Graph::get_one_random_graph(A _edges){
+	A graph;
+	int elem = get_random_elem(_edges.size());
+	graph = extract_conected_elements(_edges,_edges[elem]);
+	return graph;
+}
+
+
+vector<A> Graph::get_conected_graphs(A _edges){
+	A edges = _edges;
+	vector<A> graphs;
+
+	A graph;
+	do{
+		graph = get_one_random_graph(edges);
+		if(graph.size()>0){
+			graphs.push_back(graph);
+		}
+	}
+	while(edges.size() > 0);
 }

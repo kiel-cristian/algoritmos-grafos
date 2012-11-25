@@ -4,11 +4,11 @@ class Bheap{
 private:
 	Heap root;
 	void create_root();
-	bool is_empty();
 
 public:
 	void insert(Edge e);
-	int get_min();
+	bool is_empty();
+	Edge get_min();
 	void delete_min();
 	void print();
 	void heapify(A edges);
@@ -25,10 +25,10 @@ void Bheap::print(){
 		cout << "Empty Bheap" << endl;
 }
 
-int Bheap::get_min(){
+Edge Bheap::get_min(){
 	int min;
 	if(is_empty())
-		return -1;
+		return Edge();
 	else
 		return root.get_min();
 }

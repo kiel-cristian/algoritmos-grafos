@@ -10,7 +10,7 @@ struct Heap{
 	public:
 		void insert(Edge e);
 		void heap_insert(Edge e);
-		int get_min();
+		Edge get_min();
 		void delete_min();
 		void print(int elem);
 
@@ -170,8 +170,8 @@ void Heap::propagate_to_root(int elem){
 	}
 }
 
-int Heap::get_min(){
-	return heap.at(0).distance;
+Edge Heap::get_min(){
+	return heap.at(0);
 }
 
 void Heap::delete_min(){
