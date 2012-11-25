@@ -7,7 +7,21 @@ public:
 	bool find_binary(int e);
 	void insert_binary(int e);
 	void to_array(E array_nodes);
+
+	void print();
 };
+
+void BinaryTree::print(){
+	if(left != NULL){
+		cout << " <- ";
+		left->print();
+	}
+	cout << "key: " << key << endl;
+	if(rigth != NULL){
+		cout << " -> ";
+		rigth->print();
+	}
+}
 
 void BinaryTree::insert_binary(int e){
 	if(key == -1){

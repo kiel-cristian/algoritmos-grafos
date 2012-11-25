@@ -102,8 +102,15 @@ int main(){
 
 	cout << "Generando MST" << endl;
 
-	// E nodes = g.get_nodes();
-	E nodes = btree_to_e(g.get_b_nodes());
+	// OBTENIENDO NODOS
+	E nodes = g.get_nodes();
+	// for (int i = 0; i < nodes.size(); ++i){
+	// 	if(nodes[i] == 88530)
+	// 		cout << "nodo 88530 esta en la lista" << endl;
+	// 	if(nodes[i] == 88438)
+	// 		cout << "nodo 88438 esta en la lista" << endl;
+	// }
+	// E nodes = btree_to_e(g.get_b_nodes());
 
 	cout << "Número de nodos del grafo : " << nodes.size() << endl;
 	cout << "Número de aristas del grafo : "<< size << endl;
@@ -114,9 +121,17 @@ int main(){
 	A mst_edges;
 
 	cout << "Creando clases" << endl;
-
 	for (int i = 0; i < nodes.size(); ++i){
+
+		/*DEBUG*/
+		if(nodes[i] == 88530)
+			cout << "clase con nodo 88530 creada" << endl;
+		/**/
+
 		classes.push_back(KClass(nodes[i]));
+
+		if(nodes[i] == 88530)
+			classes.back().b_elements.print();
 	}
 
 	Edge min_node;

@@ -59,24 +59,24 @@ void Graph::read_file(){
 		e.set(u,v,distance);
 		a.push_back(e);
 
-		b_nodes.insert_binary(u);
-		b_nodes.insert_binary(v);
+		// b_nodes.insert_binary(u);
+		// b_nodes.insert_binary(v);
 
 		// if(!find_node(u))
 		// 	nodes.push_back(u);
 		// if(!find_node(v))
 		// 	nodes.push_back(v);
 
-		// if(!(u < nodes.size() and nodes[u] == u)){
-		// 	if(u >= nodes.size()){
-		// 		nodes.push_back(u);
-		// 	}
-		// }
-		// if(!(v < nodes.size() and nodes[v] == v)){
-		// 	if(v >= nodes.size()){
-		// 		nodes.push_back(v);
-		// 	}
-		// }
+		if(!(u < nodes.size() and nodes[u] == u)){
+			if(u >= nodes.size()){
+				nodes.push_back(u);
+			}
+		}
+		if(!(v < nodes.size() and nodes[v] == v)){
+			if(v >= nodes.size()){
+				nodes.push_back(v);
+			}
+		}
 	}
 	file.close();
 }
