@@ -2,14 +2,16 @@
 #include <iostream>
 #include <sstream>
 #include <string>
-#include <stdlib.h>
+
 #include "bheap.h"
+#include "btree.h"
 #include <time.h>
 
 class Graph{
 private:
 	ifstream file;
 	E nodes;
+	BinaryTree b_nodes;
 	A a;
 public:
 	Graph(){
@@ -21,6 +23,7 @@ public:
 	Edge get_edge(int element);
 	A get_edges();
 	E get_nodes();
+	BinaryTree get_b_nodes();
 	int edge_size();
 
 	A radix_sorted_edges();
@@ -30,6 +33,8 @@ public:
 	int get_random_elem(int size);
 	A get_one_random_graph(A _edges);
 	A extract_conected_elements(A edges,Edge e);
+
+	// bool find_node(int e);
 };
 
 void Graph::read_file(){
@@ -54,19 +59,37 @@ void Graph::read_file(){
 		e.set(u,v,distance);
 		a.push_back(e);
 
-		if(!(u < nodes.size() and nodes[u] == u)){
-			if(u >= nodes.size()){
-				nodes.push_back(u);
-			}
-		}
-		if(!(v < nodes.size() and nodes[v] == v)){
-			if(v >= nodes.size()){
-				nodes.push_back(v);
-			}
-		}
+		b_nodes.insert_binary(u);
+		b_nodes.insert_binary(v);
+
+		// if(!find_node(u))
+		// 	nodes.push_back(u);
+		// if(!find_node(v))
+		// 	nodes.push_back(v);
+
+		// if(!(u < nodes.size() and nodes[u] == u)){
+		// 	if(u >= nodes.size()){
+		// 		nodes.push_back(u);
+		// 	}
+		// }
+		// if(!(v < nodes.size() and nodes[v] == v)){
+		// 	if(v >= nodes.size()){
+		// 		nodes.push_back(v);
+		// 	}
+		// }
 	}
 	file.close();
 }
+
+// bool Graph::find_node(int node){
+// 	for (int i = 0; i < nodes.size(); ++i)
+// 	{
+// 		if(nodes[i] == node)
+// 			return true;
+// 	}
+// 	return false;
+// }
+
 void Graph::print(){
 	Edge e;
 	for (int i = 0; i < a.size(); ++i)
@@ -93,6 +116,10 @@ A Graph::get_edges(){
 
 E Graph::get_nodes(){
 	return nodes;
+}
+
+BinaryTree Graph::get_b_nodes(){
+	return b_nodes;
 }
 
 int Graph::get_random_elem(int size){

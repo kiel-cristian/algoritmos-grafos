@@ -1,50 +1,5 @@
 #include "graph.h"
 
-class BinaryTree{
-public:
-	BinaryTree *left,*rigth;
-	int key;
-	BinaryTree(){key = -1; left = NULL; rigth = NULL;}
-	bool find_binary(int e);
-	void insert_binary(int e);
-};
-
-void BinaryTree::insert_binary(int e){
-	if(key == -1){
-		key = e;
-		return;
-	}
-	else{
-		if(e > key){
-			if(rigth == NULL){
-				rigth = new BinaryTree();
-			}
-			rigth->insert_binary(e);
-		}
-		else{
-			if(left == NULL){
-				left = new BinaryTree();
-			}
-			left->insert_binary(e);
-		}
-	}
-}
-
-bool BinaryTree::find_binary(int e){
-	if(key == -1)
-		return false;
-	else if( key == e)
-		return true;
-
-	if( e > key and rigth != NULL){
-		rigth->find_binary(e);
-	}
-	else if(left!= NULL){
-		left->find_binary(e);
-	}
-	return false;
-}
-
 class KClass{
 public:
 	E elements;
@@ -76,6 +31,22 @@ bool KClass::k_find(int e){
 	else{
 		return b_elements.find_binary(e);
 	}
+}
+
+void BinaryTree::to_array(E array_nodes){
+	if( left!= NULL)
+		left->to_array(array_nodes);
+
+	array_nodes.push_back(key);
+
+	if( rigth!= NULL)
+		rigth->to_array(array_nodes);
+}
+
+E btree_to_e(BinaryTree nodes){
+	E array_nodes;
+	nodes.to_array(array_nodes);
+	return array_nodes;
 }
 
 void test(){
@@ -129,12 +100,20 @@ int main(){
 	cout << "Insertando ("<< size << ") vertices" << endl;
 	heap.heapify(g.get_edges());
 
-	E nodes = g.get_nodes();
+	cout << "Generando MST" << endl;
+
+	// E nodes = g.get_nodes();
+	E nodes = btree_to_e(g.get_b_nodes());
+
+	cout << "Número de nodos del grafo : " << nodes.size() << endl;
+	cout << "Número de aristas del grafo : "<< size << endl;
 
 	vector<KClass> classes;
 
 	BinaryTree mst_nodes;
 	A mst_edges;
+
+	cout << "Creando clases" << endl;
 
 	for (int i = 0; i < nodes.size(); ++i){
 		classes.push_back(KClass(nodes[i]));
@@ -142,7 +121,10 @@ int main(){
 
 	Edge min_node;
 
+	cout << "Iniciando algoritmo Kruskal" << endl;
+
 	while(!heap.is_empty()){
+
 		min_node = heap.get_min();
 
 		int u_class = -1, v_class = -1;
@@ -158,7 +140,19 @@ int main(){
 
 		}
 
+		if( u_class == -1 or v_class == -1){
+			cout << "Error!!" << endl;
+			cout << "u class: " << u_class << endl;
+			cout << "v class: " << v_class << endl;
+
+			cout << "u node: " << min_node.u << endl;
+			cout << "v node: " << min_node.v << endl;
+			break;
+		}
+
+
 		if( u_class != v_class){
+			cout << "Borrando clase: " << v_class << endl;
 			classes.erase(classes.begin() + v_class);
 			classes[u_class].k_union(v_class);
 
